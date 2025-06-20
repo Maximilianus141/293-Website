@@ -6,88 +6,411 @@
     <meta name="author" content="Maximilian K" />
     <meta name="description" content="A website for school" />
     <title>Kosmetik Ettingen</title>
-    <link href="./src/output.css" rel="stylesheet" />
-  </head>
-  <body class="min-h-screen bg-slate-50 text-neutral-800">
-    <img
-      src="recources/page.avif"
-      alt=""
-      class="w-full hidden sm:block select-none"
-    />
-    <header
-      class="rounded-3xl max-w-full w-5/6 mx-auto mt-2.5 bg-neutral-200 sticky top-2.5 opacity-95 flex-row flex 2xl:w-1/2 xl:2/3"
-    >
-      <h1 class="flex text-3xl font-bold self-center m-2.5 text-zinc-700">
-        Kosmetik Ettingen
-      </h1>
-      <nav class="ml-auto flex flex-row flex-wrap items-center max-w-fit">
-        <a
-          href="index.html"
-          class="flex py-2 px-6 my-2.5 mr-2.5 rounded-3xl bg-orange-100 drop-shadow-sm ml-auto justify-self-end font-semibold hover:bg-orange-200"
-          >Startseite</a
-        >
-        <a
-          href="kontakt.html"
-          class="flex py-2 px-6 my-2.5 mr-2.5 rounded-3xl bg-orange-100 hover:bg-orange-200 drop-shadow-sm ml-auto justify-self-end font-semibold"
-          >Kontakt</a
-        >
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        <a
-          href="showcase.html"
-          class="flex py-2 px-6 my-2.5 mr-2.5 rounded-3xl bg-orange-50 drop-shadow-sm ml-auto justify-self-end font-semibold cursor-default"
-          >Showcase</a
-        >
-        <a
-          href="#hero"
-          class="flex py-2 px-6 my-2.5 mr-2.5 rounded-3xl bg-orange-100 hover:bg-orange-200 drop-shadow-sm ml-auto justify-self-end font-semibold"
-          >link</a
-        >
-      </nav>
-    </header>
-    <main id="hero" class="flex-col-reverse my-5 sm:ml-6 -ml-3">
-      <img src="recources/blahaj-spin.gif" alt="" class="w-1/3 mx-auto" />
-      <div
-        class="tenor-gif-embed mx-auto"
-        data-postid="9414264480969140733"
-        data-share-method="host"
-        data-aspect-ratio="1"
-        data-width="50%"
-      >
-        <a
-          href="https://tenor.com/view/blahaj-bl%C3%A5haj-spinning-gif-9414264480969140733"
-          >Blahaj Blåhaj Sticker</a
-        >from
-        <a href="https://tenor.com/search/blahaj-stickers">Blahaj Stickers</a>
-      </div>
-      <script
-        type="text/javascript"
-        async
-        src="https://tenor.com/embed.js"
-      ></script>
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/yKMOUyiEbdU?si=OwD2KwzGLHUifNJV?mute=1&autoplay=1&playlist=yKMOUyiEbdU&loop=1&controls=0"
-        title="Blahaj youtube video"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-        loading="lazy"
-        class="mx-auto"
-      ></iframe>
-    </main>
-    <footer>
-      <div class="h-52 bg-neutral-200 mt-5 text-xl flex">
-        <div class="w-max m-auto text-center">
-          © Maximilian Kenner. All Rights Reserved. <br />
-          <a href="mailto:maximilian.kenn@gmail.com" class="hover:underline"
-            >maximilian.kenn@gmail.com</a
-          >
-          <br />
-          2025
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc;
+        color: #404040;
+        line-height: 1.6;
+      }
+
+      /* CSS Grid Layout - Main Page Structure */
+      .page-container {
+        display: grid;
+        grid-template-areas: 
+          "hero-image"
+          "header"
+          "main"
+          "footer";
+        grid-template-rows: auto auto 1fr auto;
+        min-height: 100vh;
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+
+      /* Mobile-First Breakpoint: 768px (Tablet) */
+      /* Begründung: Tablets haben mehr Platz für komplexere Layouts */
+      @media (min-width: 768px) {
+        .page-container {
+          grid-template-areas: 
+            "hero-image hero-image"
+            "header header"
+            "main main"
+            "footer footer";
+          grid-template-columns: 1fr 1fr;
+          padding: 1rem;
+          gap: 1.5rem;
+        }
+      }
+
+      /* Desktop Breakpoint: 1200px (Large Desktop) */
+      /* Begründung: Desktop-Monitore erlauben Sidebar-Layout und mehr Content-Bereiche */
+      @media (min-width: 1200px) {
+        .page-container {
+          grid-template-areas: 
+            "hero-image hero-image hero-image"
+            "header header header"
+            "sidebar main content"
+            "footer footer footer";
+          grid-template-columns: 200px 1fr 300px;
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 2rem;
+          gap: 2rem;
+        }
+      }
+
+      /* Hero Image */
+      .hero-image {
+        grid-area: hero-image;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 1rem;
+        display: none;
+      }
+
+      @media (min-width: 640px) {
+        .hero-image {
+          display: block;
+        }
+      }
+
+      /* Header - Flexbox für Navigation */
+      .header {
+        grid-area: header;
+        background-color: #e5e5e5;
+        border-radius: 1.5rem;
+        padding: 1rem;
+        opacity: 0.95;
+        position: sticky;
+        top: 1rem;
+        z-index: 100;
+      }
+
+      .header-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      @media (min-width: 768px) {
+        .header-content {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+
+      .header-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #3f3f46;
+      }
+
+      @media (min-width: 768px) {
+        .header-title {
+          font-size: 1.875rem;
+        }
+      }
+
+      /* Navigation - Flexbox */
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .nav {
+          justify-content: flex-end;
+        }
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 1.5rem;
+        background-color: #fed7aa;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        font-weight: 600;
+        text-decoration: none;
+        color: inherit;
+        transition: background-color 0.2s;
+        font-size: 0.875rem;
+      }
+
+      @media (min-width: 768px) {
+        .nav-link {
+          padding: 0.5rem 1.5rem;
+          font-size: 1rem;
+        }
+      }
+
+      .nav-link:hover {
+        background-color: #fdba74;
+      }
+
+      .nav-link.active {
+        background-color: #fef2e2;
+        cursor: default;
+      }
+
+      .nav-link.active:hover {
+        background-color: #fef2e2;
+      }
+
+      /* Sidebar für Desktop */
+      .sidebar {
+        grid-area: sidebar;
+        background-color: #f1f5f9;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        display: none;
+      }
+
+      @media (min-width: 1200px) {
+        .sidebar {
+          display: block;
+        }
+      }
+
+      .sidebar h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #1e293b;
+      }
+
+      .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .sidebar-link {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: #64748b;
+        transition: background-color 0.2s;
+      }
+
+      .sidebar-link:hover {
+        background-color: #e2e8f0;
+        color: #1e293b;
+      }
+
+      /* Main Content */
+      .main {
+        grid-area: main;
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .blahaj-image {
+        width: 80%;
+        max-width: 300px;
+        height: auto;
+        border-radius: 0.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .blahaj-image {
+          width: 50%;
+        }
+      }
+
+      .tenor-gif-embed {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .youtube-video {
+        width: 100%;
+        max-width: 560px;
+        height: auto;
+        aspect-ratio: 16/9;
+        border-radius: 0.5rem;
+      }
+
+      /* Content Sidebar für Desktop */
+      .content-sidebar {
+        grid-area: content;
+        background-color: #f8fafc;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        display: none;
+      }
+
+      @media (min-width: 1200px) {
+        .content-sidebar {
+          display: block;
+        }
+      }
+
+      .content-sidebar h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #1e293b;
+      }
+
+      .info-card {
+        background-color: white;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #374151;
+      }
+
+      .info-card p {
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      /* Footer */
+      .footer {
+        grid-area: footer;
+        background-color: #e5e5e5;
+        border-radius: 1rem;
+        padding: 2rem;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        font-size: 1.125rem;
+        gap: 0.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .footer-content {
+          font-size: 1.25rem;
+        }
+      }
+
+      .footer-email {
+        text-decoration: none;
+        color: inherit;
+        transition: text-decoration 0.2s;
+      }
+
+      .footer-email:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-container">
+      <img
+        src="recources/page.avif"
+        alt="Kosmetik Ettingen Hero"
+        class="hero-image"
+      />
+      
+      <header class="header">
+        <div class="header-content">
+          <h1 class="header-title">Kosmetik Ettingen</h1>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">Startseite</a>
+            <a href="kontakt.html" class="nav-link">Kontakt</a>
+            <a href="showcase.html" class="nav-link active">Showcase</a>
+            <a href="#hero" class="nav-link">Link</a>
+          </nav>
         </div>
-      </div>
-    </footer>
+      </header>
+
+      <aside class="sidebar">
+        <h3>Navigation</h3>
+        <div class="sidebar-menu">
+          <a href="#services" class="sidebar-link">Unsere Services</a>
+          <a href="#about" class="sidebar-link">Über uns</a>
+          <a href="#gallery" class="sidebar-link">Galerie</a>
+          <a href="#testimonials" class="sidebar-link">Bewertungen</a>
+        </div>
+      </aside>
+
+      <main class="main" id="hero">
+        <div class="main-content">
+          <img src="recources/blahaj-spin.gif" alt="Spinning Blahaj" class="blahaj-image" />
+          
+          <div
+            class="tenor-gif-embed"
+            data-postid="9414264480969140733"
+            data-share-method="host"
+            data-aspect-ratio="1"
+            data-width="100%"
+          >
+            <a href="https://tenor.com/view/blahaj-bl%C3%A5haj-spinning-gif-9414264480969140733">
+              Blahaj Blåhaj Sticker
+            </a> from 
+            <a href="https://tenor.com/search/blahaj-stickers">Blahaj Stickers</a>
+          </div>
+          
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/yKMOUyiEbdU?si=OwD2KwzGLHUifNJV&mute=1&autoplay=1&playlist=yKMOUyiEbdU&loop=1&controls=0"
+            title="Blahaj youtube video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+            class="youtube-video"
+          ></iframe>
+        </div>
+      </main>
+
+      <aside class="content-sidebar">
+        <h3>Zusätzliche Infos</h3>
+        <div class="info-card">
+          <h4>Öffnungszeiten</h4>
+          <p>Mo-Fr: 9:00-18:00<br>Sa: 9:00-16:00<br>So: Geschlossen</p>
+        </div>
+        <div class="info-card">
+          <h4>Kontakt</h4>
+          <p>Telefon: +41 12 123 12 12<br>E-Mail: info@kosmetik-ettingen.ch</p>
+        </div>
+      </aside>
+
+      <footer class="footer">
+        <div class="footer-content">
+          <div>© Maximilian Kenner. All Rights Reserved.</div>
+          <a href="mailto:maximilian.kenn@gmail.com" class="footer-email">
+            maximilian.kenn@gmail.com
+          </a>
+          <div>2025</div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
   </body>
 </html>
